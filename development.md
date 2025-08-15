@@ -72,3 +72,9 @@ Each component should consist of the following files:
 1. Commits should meet [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) rules
 2. Project uses `eslint` and `prettier` for code linting and styling.
 3. Both `husky` and `lint-staged` are used to ensure that code meets code style and guidelines
+
+### Publish to npm
+
+npm ci
+npm version patch
+npm publish
