@@ -24,7 +24,9 @@ export const Calendar: FC<CalendarProps> = ({
   onTileClick,
   onItemClick,
   toggleTheme,
-  topBarWidth
+  topBarWidth,
+  onGridSelect,
+  onTileChange
 }) => {
   const [tooltipData, setTooltipData] = useState<TooltipData>(initialTooltipData);
   const [filteredData, setFilteredData] = useState(data);
@@ -150,6 +152,9 @@ export const Calendar: FC<CalendarProps> = ({
             rows={totalRowsPerPage}
             ref={gridRef}
             onTileClick={onTileClick}
+            onGridSelect={onGridSelect}
+            rowsPerItem={rowsPerItem}
+            onTileChange={onTileChange}
           />
         ) : (
           <StyledEmptyBoxWrapper width={topBarWidth}>

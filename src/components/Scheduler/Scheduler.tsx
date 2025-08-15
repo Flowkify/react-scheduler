@@ -19,7 +19,9 @@ const Scheduler = ({
   onFilterData,
   onClearFilterData,
   onItemClick,
-  isLoading
+  isLoading,
+  onGridSelect,
+  onTileChange
 }: SchedulerProps) => {
   const appConfig: Config = useMemo(
     () => ({
@@ -90,6 +92,8 @@ const Scheduler = ({
                   topBarWidth={topBarWidth ?? 0}
                   onItemClick={onItemClick}
                   toggleTheme={toggleTheme}
+                  onGridSelect={onGridSelect}
+                  onTileChange={onTileChange}
                 />
               </StyledInnerWrapper>
             </StyledOutsideWrapper>

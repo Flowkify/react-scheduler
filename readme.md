@@ -162,15 +162,17 @@ const mockedSchedulerData: SchedulerData = [
 
 ##### Scheduler Component Props
 
-| Property Name     | Type       | Arguments                         | Description                                                                                                                       |
-| ----------------- | ---------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| isLoading         | `boolean`  | -                                 | shows loading indicators on scheduler                                                                                             |
-| onRangeChange     | `function` | updated `startDate` and `endDate` | runs whenever user reaches end of currently rendered canvas                                                                       |
-| onTileClick       | `function` | clicked resource data             | detects resource click                                                                                                            |
-| onItemClick       | `function` | clicked left column item data     | detects item click on left column                                                                                                 |
-| onFilterData      | `function` | -                                 | callback firing when filter button was clicked                                                                                    |
-| onClearFilterData | `function` | -                                 | callback firing when clear filters button was clicked (clearing button is visible **only** when filterButtonState is set to `>0`) |
-| config            | `Config`   | -                                 | object with scheduler config properties                                                                                           |
+| Property Name     | Type                 | Arguments                         | Description                                                                                                                       |
+| ----------------- | -------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| isLoading         | `boolean`            | -                                 | shows loading indicators on scheduler                                                                                             |
+| onRangeChange     | `function`           | updated `startDate` and `endDate` | runs whenever user reaches end of currently rendered canvas                                                                       |
+| onTileClick       | `function`           | clicked resource data             | detects resource click                                                                                                            |
+| onItemClick       | `function`           | clicked left column item data     | detects item click on left column                                                                                                 |
+| onFilterData      | `function`           | -                                 | callback firing when filter button was clicked                                                                                    |
+| onClearFilterData | `function`           | -                                 | callback firing when clear filters button was clicked (clearing button is visible **only** when filterButtonState is set to `>0`) |
+| onGridSelect      | `function`           | `GridSelectionData`               | fires when dragging on empty grid creates a selection                                                                             |
+| onTileChange      | `function`           | `TileChangeData`                  | fires on mouse-up after moving/resizing a tile (snapped to grid)                                                                  |
+| config            | `Config`             | -                                 | object with scheduler config properties                                                                                           |
 
 ##### Scheduler Config Object
 
@@ -290,6 +292,12 @@ item that will be visible on the grid as tile and that will be accessible as arg
 | endDate | `Date` | date for calculating end position for resource |
 | occupancy | `number` | number of seconds resource takes up for given row that will be visible on resource tooltip when hovered |
 | bgColor | `string (optional)` | tile color |
+
+#### Grid selection and tile updates (brief)
+
+- Empty-grid selection: drag on empty grid to get `onGridSelect({ resourceId, resourceLabel, startDate, endDate })`.
+- Tile move/resize: drag a tile or its left/right edge; on mouse-up you get `onTileChange({ projectId, resourceId, startDate, endDate })`.
+- Snapping: weeks/days/hours depending on zoom.
 
 ### Troubleshooting
 

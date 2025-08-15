@@ -14,6 +14,32 @@ export const StyledTileWrapper = styled.button`
   color: ${({ theme }) => theme.colors.textPrimary};
   width: 100%;
   cursor: pointer;
+  position: absolute;
+  &:hover {
+    outline: 2px solid ${({ theme }) => theme.colors.hover};
+  }
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  &::before {
+    left: 0;
+    cursor: ew-resize;
+  }
+  &::after {
+    right: 0;
+    cursor: ew-resize;
+  }
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+  }
 `;
 
 export const StyledTextWrapper = styled.div`

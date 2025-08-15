@@ -193,3 +193,27 @@ export type TooltipData = {
   resourceIndex: number;
   disposition: OccupancyData;
 };
+
+export type GridSelectionData = {
+  /** Selected resource row id */
+  resourceId: string;
+  /** Human-readable resource label */
+  resourceLabel: SchedulerRowLabel;
+  /** Start date of the dragged selection */
+  startDate: Date;
+  /** End date of the dragged selection */
+  endDate: Date;
+};
+
+export type TileChangeData = {
+  /** Project id being changed */
+  projectId: string;
+  /** Resource row id the project is (re)assigned to */
+  resourceId: string;
+  /** Optional previous resource id when moving between rows */
+  previousResourceId?: string;
+  /** New start date after drag/resize */
+  startDate: Date;
+  /** New end date after drag/resize */
+  endDate: Date;
+};
