@@ -1,11 +1,11 @@
 {
-  "name": "@bitnoi.se/react-scheduler",
-  "version": "0.3.0",
+  "name": "@flowkify/react-scheduler",
+  "version": "1.0.10",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Bitnoise/react-scheduler"
+    "url": "https://github.com/flowkify/react-scheduler"
   },
   "keywords": [
     "scheduler",
@@ -16,8 +16,8 @@
     "calendar"
   ],
   "author": {
-    "name": "Bitnoise",
-    "url": "https://scheduler.bitnoise.pl/"
+    "name": "Flowkify",
+    "url": "https://flowkify.com/"
   },
   "scripts": {
     "dev": "vite",
