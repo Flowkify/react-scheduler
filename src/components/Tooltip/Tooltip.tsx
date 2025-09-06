@@ -1,5 +1,5 @@
 import { FC, useLayoutEffect, useRef } from "react";
-import { dayWidth, weekWidth, zoom2ColumnWidth } from "@/constants";
+import { boxHeight, dayWidth, weekWidth, zoom2ColumnWidth } from "@/constants";
 import { useLanguage } from "@/context/LocaleProvider";
 import Icon from "../Icon";
 import {
@@ -35,7 +35,8 @@ const Tooltip: FC<TooltipProps> = ({ tooltipData, zoom, customTooltip }) => {
     // re calculate tooltip width before repaint
     if (!tooltipRef.current) return;
 
-    const { width: tooltipWidth } = tooltipRef.current.getBoundingClientRect();
+    const { width: tooltipWidth, height: tooltipHeight } =
+      tooltipRef.current.getBoundingClientRect();
 
     let xOffset;
     switch (zoom) {
@@ -47,7 +48,8 @@ const Tooltip: FC<TooltipProps> = ({ tooltipData, zoom, customTooltip }) => {
         break;
     }
     tooltipRef.current.style.left = `${coords.x - xOffset}px`;
-    tooltipRef.current.style.top = `${coords.y + 8}px`;
+    const top = coords.y + 8 - tooltipHeight + boxHeight;
+    tooltipRef.current.style.top = `${top}px`;
 
     // disposition.overtime affects tooltip's width, thus it's needed to recalculate it's coords whenever overtime changes
   }, [coords.x, width, disposition.overtime, coords.y, zoom, project]);
