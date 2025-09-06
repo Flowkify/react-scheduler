@@ -30,6 +30,7 @@ const Scheduler = ({
       includeTakenHoursOnWeekendsInDayView: false,
       showTooltip: true,
       translations: undefined,
+      customTooltip: undefined,
       ...config
     }),
     [config]

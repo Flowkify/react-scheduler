@@ -12,6 +12,7 @@ import { StyledOuterWrapper, StyledInnerWrapper, StyledEmptyBoxWrapper } from ".
 const initialTooltipData: TooltipData = {
   coords: { x: 0, y: 0 },
   resourceIndex: 0,
+  project: undefined,
   disposition: {
     taken: { hours: 0, minutes: 0 },
     free: { hours: 0, minutes: 0 },
@@ -35,7 +36,7 @@ export const Calendar: FC<CalendarProps> = ({
   const {
     zoom,
     startDate,
-    config: { includeTakenHoursOnWeekendsInDayView, showTooltip, showThemeToggle }
+    config: { includeTakenHoursOnWeekendsInDayView, showTooltip, showThemeToggle, customTooltip }
   } = useCalendar();
   const gridRef = useRef<HTMLDivElement>(null);
   const {
@@ -64,7 +65,8 @@ export const Calendar: FC<CalendarProps> = ({
         const {
           coords: { x, y },
           resourceIndex,
-          disposition
+          disposition,
+          project
         } = getTooltipData(
           startDate,
           tooltipCoords,
@@ -73,7 +75,7 @@ export const Calendar: FC<CalendarProps> = ({
           zoom,
           includeTakenHoursOnWeekendsInDayView
         );
-        setTooltipData({ coords: { x, y }, resourceIndex, disposition });
+        setTooltipData({ coords: { x, y }, resourceIndex, disposition, project });
         setIsVisible(true);
       },
       300
@@ -162,7 +164,7 @@ export const Calendar: FC<CalendarProps> = ({
           </StyledEmptyBoxWrapper>
         )}
         {showTooltip && isVisible && tooltipData?.resourceIndex > -1 && (
-          <Tooltip tooltipData={tooltipData} zoom={zoom} />
+          <Tooltip tooltipData={tooltipData} zoom={zoom} customTooltip={customTooltip} />
         )}
       </StyledInnerWrapper>
     </StyledOuterWrapper>
