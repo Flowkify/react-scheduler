@@ -73,6 +73,10 @@ Each component should consist of the following files:
 2. Project uses `eslint` and `prettier` for code linting and styling.
 3. Both `husky` and `lint-staged` are used to ensure that code meets code style and guidelines
 
+### Run locally
+
+npm run dev
+
 ### Publish to npm
 
 npm ci
