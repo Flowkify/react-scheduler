@@ -5,7 +5,7 @@ import { useCalendar } from "@/context/CalendarProvider";
 import { getDatesRange } from "@/utils/getDatesRange";
 import { getTileProperties } from "@/utils/getTileProperties";
 import { getTileTextColor } from "@/utils/getTileTextColor";
-import { boxHeight, dayWidth, zoom2ColumnWidth } from "@/constants";
+import { dayWidth, zoom2ColumnWidth } from "@/constants";
 import {
   StyledDescription,
   StyledStickyWrapper,
@@ -15,15 +15,7 @@ import {
 } from "./styles";
 import { TileProps } from "./types";
 
-const Tile: FC<TileProps> = ({
-  row,
-  data,
-  zoom,
-  onTileClick,
-  rowsPerItem,
-  onTileChange,
-  resourceId
-}) => {
+const Tile: FC<TileProps> = ({ row, data, zoom, onTileClick, onTileChange, resourceId }) => {
   const { date } = useCalendar();
   const datesRange = getDatesRange(date, zoom);
   const { y, x, width } = getTileProperties(
@@ -60,16 +52,6 @@ const Tile: FC<TileProps> = ({
     }
   }, [zoom]);
 
-  const cleanupDrag = useCallback(() => {
-    dragModeRef.current = null;
-    dragStartRef.current = null;
-    setGhost(null);
-    document.body.style.userSelect = "";
-    document.body.style.cursor = "";
-    window.removeEventListener("mousemove", onWindowMouseMove as any);
-    window.removeEventListener("mouseup", onWindowMouseUp as any);
-  }, []);
-
   const onWindowMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!dragStartRef.current || !dragModeRef.current) return;
@@ -105,14 +87,13 @@ const Tile: FC<TileProps> = ({
   );
 
   const onWindowMouseUp = useCallback(() => {
-    if (!dragStartRef.current || !dragModeRef.current) return cleanupDrag();
+    if (!dragStartRef.current || !dragModeRef.current) return;
     const mode = dragModeRef.current;
-    const { startX, width: startWidth, rowIndex } = dragStartRef.current;
+    const { startX, width: startWidth } = dragStartRef.current;
     const { cellWidth, unit } = getCellWidthAndUnit();
     const currentGhost = ghostRef.current ?? ghost;
-    if (!currentGhost) return cleanupDrag();
+    if (!currentGhost) return;
     const dx = currentGhost.x - startX;
-    const dw = currentGhost.width - startWidth;
     const dxSteps = Math.round(dx / cellWidth);
     const initialWidthSteps = Math.max(1, Math.round(startWidth / cellWidth));
     const currentWidthSteps = Math.max(1, Math.round(currentGhost.width / cellWidth));
@@ -143,19 +124,34 @@ const Tile: FC<TileProps> = ({
       });
     }
     suppressClickRef.current = changed;
-    cleanupDrag();
+    dragModeRef.current = null;
+    dragStartRef.current = null;
+    setGhost(null);
+    document.body.style.userSelect = "";
+    document.body.style.cursor = "";
+    window.removeEventListener("mousemove", onWindowMouseMove);
+    window.removeEventListener("mouseup", onWindowMouseUp);
     ghostRef.current = null;
   }, [
-    cleanupDrag,
     data.endDate,
     data.id,
     data.startDate,
     getCellWidthAndUnit,
     ghost,
-    hasMoved,
     onTileChange,
+    onWindowMouseMove,
     resourceId
   ]);
+
+  const cleanupDrag = useCallback(() => {
+    dragModeRef.current = null;
+    dragStartRef.current = null;
+    setGhost(null);
+    document.body.style.userSelect = "";
+    document.body.style.cursor = "";
+    window.removeEventListener("mousemove", onWindowMouseMove);
+    window.removeEventListener("mouseup", onWindowMouseUp);
+  }, [onWindowMouseMove, onWindowMouseUp]);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -172,19 +168,19 @@ const Tile: FC<TileProps> = ({
       ghostRef.current = initial;
       document.body.style.userSelect = "none";
       document.body.style.cursor = mode === "move" ? "grabbing" : "ew-resize";
-      window.addEventListener("mousemove", onWindowMouseMove as any);
-      window.addEventListener("mouseup", onWindowMouseUp as any);
+      window.addEventListener("mousemove", onWindowMouseMove);
+      window.addEventListener("mouseup", onWindowMouseUp);
       e.preventDefault();
       e.stopPropagation();
     },
     [onWindowMouseMove, onWindowMouseUp, width, x, row]
   );
 
-  const handleMouseMove = useCallback((_e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = useCallback(() => {
     // no-op: we handle move via window listeners for robustness
   }, []);
 
-  const handleMouseUp = useCallback((_e?: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUp = useCallback(() => {
     // no-op: handled by window mouseup for robustness
   }, []);
 

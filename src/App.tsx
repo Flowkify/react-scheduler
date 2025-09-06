@@ -10,6 +10,7 @@ import {
 } from "./types/global";
 import ConfigPanel from "./components/ConfigPanel";
 import { StyledSchedulerFrame } from "./styles";
+import CustomToolTip from "./CustomToolTipExample";
 import { Scheduler } from ".";
 
 function App() {
@@ -85,7 +86,8 @@ function App() {
           config={{
             zoom: 0,
             maxRecordsPerPage: maxRecordsPerPage,
-            showThemeToggle: true
+            showThemeToggle: true,
+            customTooltip: (tooltipData) => <CustomToolTip tooltipData={tooltipData} />
           }}
           onItemClick={(data) => console.log("clicked: ", data)}
           onGridSelect={handleGridSelect}

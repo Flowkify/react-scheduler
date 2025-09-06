@@ -221,17 +221,7 @@ const Grid = forwardRef<HTMLDivElement, GridProps>(function Grid(
       setDragStart(null);
       setDragCurrent(null);
     },
-    [
-      data,
-      dragStart,
-      getCellWidthAndUnit,
-      isDragging,
-      onGridSelect,
-      rowsPerItem,
-      snapX,
-      snapYRowIndex,
-      startDate
-    ]
+    [data, dragStart, getCellWidthAndUnit, isDragging, onGridSelect, rowsPerItem, snapX, startDate]
   );
 
   return (

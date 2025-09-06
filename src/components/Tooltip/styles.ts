@@ -31,8 +31,9 @@ export const StyledContentWrapper = styled.div``;
 export const StyledInnerWrapper = styled.div`
   display: flex;
   align-items: center;
-  &:first-child {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 export const StyledTextWrapper = styled.div`
