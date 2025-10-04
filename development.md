@@ -80,5 +80,6 @@ npm run dev
 ### Publish to npm
 
 npm ci
+npm run build
 npm version patch
 npm publish
