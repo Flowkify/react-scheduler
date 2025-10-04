@@ -4,6 +4,7 @@ import { leftColumnWidth } from "@/constants";
 export const StyledOuterWrapper = styled.div`
   position: relative;
   display: flex;
+  isolation: isolate; /* Creates a new stacking context */
 `;
 
 export const StyledInnerWrapper = styled.div`
@@ -11,7 +12,7 @@ export const StyledInnerWrapper = styled.div`
   margin-left: ${leftColumnWidth};
   display: flex;
   flex-direction: column;
-  contain: paint;
+  z-index: 0;
 `;
 
 export const StyledEmptyBoxWrapper = styled.div<{ width: number }>`
@@ -19,7 +20,7 @@ export const StyledEmptyBoxWrapper = styled.div<{ width: number }>`
   position: sticky;
   top: 0;
   height: 100%;
-  left: ${leftColumnWidth}px;
+  margin-left: ${leftColumnWidth}px;
   display: flex;
   justify-content: center;
   align-items: center;
